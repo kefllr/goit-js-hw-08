@@ -102,17 +102,19 @@ galleryContainer.appendChild(fragmentImg)
 
       instanceGlobal = basicLightbox.create(`
       <img class="image-modal" src = "${largeImageSrc}" width="1112" height="640">
-    `)
-    instanceGlobal.show()
-    
-    document.addEventListener(`keydown`, closeModalImg)
+    `, {
+      onShow: () => {
+        window.addEventListener(`keydown`, closeModalImg)
+      },
+      onClose: () =>{
+        window.removeEventListener(`keydown`, closeModalImg)
+      }
+    })
+    instanceGlobal.show();
   }
 
   function closeModalImg(event) {
-    if (event.key === `Escape`) {
-      instanceGlobal.close()
-
-      document.removeEventListener(`keydown`, closeModalImg)
-    }
-    
+    if (event.code === `Escape`) {
+      instanceGlobal.close();
+    };
   }
